@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Niravaran Yatra - The Bare Trip</title>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --forest: #1a3a1a;
+            --earth: #8b6914;
+            --sky: #4a90a4;
+            --fire: #d84315;
+            --cream: #fef9f3;
+            --dark: #1a1a1a;
+        }
+
+        body {
+            font-family: 'Space Grotesk', sans-serif;
+            background: var(--cream);
+            color: var(--dark);
+            line-height: 1.7;
+        }
+
+        .hero {
+            background: linear-gradient(135deg, var(--forest) 0%, #2d5a2d 100%);
+            color: var(--cream);
+            padding: 8rem 2rem 6rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg width="60" height="60" xmlns="http://www.w3.org/2000/svg"><path d="M0 0h60v60H0z" fill="none"/><path d="M30 15l5 10h10l-8 7 3 10-10-6-10 6 3-10-8-7h10z" fill="rgba(254,249,243,0.05)"/></svg>');
+            opacity: 0.3;
+        }
+
+        .hero-content {
+            position: relative;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(3rem, 8vw, 5.5rem);
+            font-weight: 900;
+            margin-bottom: 1rem;
+            line-height: 1.1;
+        }
+
+        .subtitle {
+            font-size: clamp(1.1rem, 2.5vw, 1.5rem);
+            opacity: 0.95;
+            margin-bottom: 0.5rem;
+        }
+
+        .dates {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: rgba(254,249,243,0.15);
+            padding: 0.75rem 1.5rem;
+            border-radius: 50px;
+            margin-top: 1.5rem;
+            font-weight: 500;
+            backdrop-filter: blur(10px);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        section {
+            padding: 5rem 0;
+        }
+
+        .intro {
+            background: var(--cream);
+        }
+
+        .intro-text {
+            font-size: 1.3rem;
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+            line-height: 1.9;
+            color: var(--forest);
+        }
+
+        .goals {
+            background: var(--dark);
+            color: var(--cream);
+        }
+
+        .goals-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 3rem;
+            margin-top: 3rem;
+        }
+
+        .goal-card {
+            background: rgba(254,249,243,0.05);
+            padding: 2.5rem;
+            border-radius: 20px;
+            border: 2px solid rgba(254,249,243,0.1);
+            transition: all 0.3s ease;
+        }
+
+        .goal-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--earth);
+        }
+
+        .goal-icon {
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+            display: block;
+            color: var(--earth);
+        }
+
+        .goal-card h3 {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            font-family: 'Playfair Display', serif;
+        }
+
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2.5rem, 5vw, 3.5rem);
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .itinerary {
+            background: linear-gradient(to bottom, var(--cream), #f5ebe0);
+        }
+
+        .day-card {
+            background: white;
+            border-radius: 20px;
+            padding: 2.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.08);
+            border-left: 5px solid var(--forest);
+            transition: all 0.3s ease;
+        }
+
+        .day-card:hover {
+            transform: translateX(10px);
+            box-shadow: 0 15px 50px rgba(0,0,0,0.12);
+        }
+
+        .day-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .day-number {
+            background: var(--forest);
+            color: var(--cream);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1.2rem;
+        }
+
+        .day-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            color: var(--forest);
+        }
+
+        .activity-list {
+            list-style: none;
+            margin-top: 1rem;
+        }
+
+        .activity-list li {
+            padding: 0.75rem 0;
+            padding-left: 2rem;
+            position: relative;
+        }
+
+        .activity-list li::before {
+            content: '→';
+            position: absolute;
+            left: 0;
+            color: var(--earth);
+            font-weight: 700;
+        }
+
+        .highlight {
+            background: var(--sky);
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 8px;
+            font-weight: 500;
+        }
+
+        .different {
+            background: var(--fire);
+            color: white;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .feature-card {
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .feature-icon {
+            font-size: 4rem;
+            color: var(--fire);
+            margin-bottom: 1rem;
+        }
+
+        .feature-card h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .logistics {
+            background: linear-gradient(135deg, var(--forest) 0%, #2d5a2d 100%);
+            color: var(--cream);
+        }
+
+        .logistics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .logistics-card {
+            background: rgba(254,249,243,0.1);
+            padding: 2rem;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+        }
+
+        .logistics-card h3 {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            font-family: 'Playfair Display', serif;
+        }
+
+        .cocreator {
+            background: var(--earth);
+            color: var(--cream);
+        }
+
+        .cocreator-content {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .important-note {
+            background: rgba(254,249,243,0.15);
+            padding: 2rem;
+            border-radius: 15px;
+            margin: 2rem 0;
+            border-left: 5px solid var(--cream);
+        }
+
+        .criteria-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .criteria-item {
+            display: flex;
+            align-items: start;
+            gap: 1rem;
+        }
+
+        .criteria-icon {
+            font-size: 1.5rem;
+            color: var(--cream);
+        }
+
+        .philosophy {
+            background: var(--cream);
+            text-align: center;
+        }
+
+        .philosophy-text {
+            max-width: 800px;
+            margin: 2rem auto;
+            font-size: 1.2rem;
+            line-height: 1.8;
+        }
+
+        .final-note {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            margin-top: 3rem;
+            font-style: italic;
+            color: var(--forest);
+        }
+
+        @media (max-width: 768px) {
+            .hero {
+                padding: 5rem 1rem 4rem;
+            }
+            
+            section {
+                padding: 3rem 0;
+            }
+
+            .day-card {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="hero">
+        <div class="hero-content">
+            <h1>Niravaran Yatra</h1>
+            <p class="subtitle">The Bare Trip</p>
+            <p style="font-size: 1.2rem; margin-top: 1.5rem;">An Immersive Expedition into the Eastern Ghats</p>
+            <div class="dates">
+                <i class="ph-bold ph-calendar-blank"></i>
+                January 10-18, 2026 | ASR District, Andhra Pradesh
+            </div>
+        </div>
+    </div>
+
+    <section class="intro">
+        <div class="container">
+            <p class="intro-text">
+                This is <strong>not</strong> a romanticized cultural tour. This is a raw, unfiltered immersion into the tribal belt of Andhra Pradesh's Eastern Ghats—experiencing the real, the good, the bad, and the ugly of tribal life during one of their most significant festivals. We'll live in tents, forage for food, cook with locals, and participate in Sankranti festivities that range from sacred celebrations to traditional cockfighting. 
+            </p>
+        </div>
+    </section>
+
+    <section class="goals">
+        <div class="container">
+            <h2 class="section-title">Two Goals</h2>
+            <div class="goals-grid">
+                <div class="goal-card">
+                    <i class="ph-fill ph-hand-heart goal-icon"></i>
+                    <h3>Constructive Access</h3>
+                    <p>Deepen relationships and create pathways for positive change that are community-led and culturally sensitive.</p>
+                </div>
+                <div class="goal-card">
+                    <i class="ph-fill ph-users-three goal-icon"></i>
+                    <h3>Community Building</h3>
+                    <p>Cultivate a group of 10 early adopters—risk-takers and co-creators ready to build decentralized trust and challenge conventional tourism models.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="itinerary">
+        <div class="container">
+            <h2 class="section-title">The 10-Day Journey</h2>
+            
+            <div class="day-card">
+                <div class="day-header">
+                    <div class="day-number">1</div>
+                    <h3 class="day-title">January 10 - Arrival</h3>
+                </div>
+                <ul class="activity-list">
+                    <li>Reach Visakhapatnam by noon</li>
+                    <li>Explore the coastal city</li>
+                    <li>Prepare for the journey ahead</li>
+                </ul>
+            </div>
+
+            <div class="day-card">
+                <div class="day-header">
+                    <div class="day-number">2-3</div>
+                    <h3 class="day-title">Jan 11-12 - Addathegala <span class="highlight">Sankranti Immersion</span></h3>
+                </div>
+                <p><strong>Cultural Experience:</strong></p>
+                <ul class="activity-list">
+                    <li>Festival celebration and cooking dinner with locals</li>
+                    <li>Traditional cockfighting</li>
+                    <li>Fishtail palm toddy tasting</li>
+                    <li>Overnight homestay with Dhimsa (traditional dance)</li>
+                </ul>
+                <p style="margin-top: 1.5rem;"><strong>Nature Exploration:</strong></p>
+                <ul class="activity-list">
+                    <li>Birding by Maddigedda Reservoir</li>
+                    <li>River walk by Yeleru River</li>
+                    <li>Foraging local greens and learning traditional cooking</li>
+                </ul>
+            </div>
+
+            <div class="day-card">
+                <div class="day-header">
+                    <div class="day-number">4</div>
+                    <h3 class="day-title">Jan 13 - Paderu <span class="highlight">Medicinal Herb Workshop</span></h3>
+                </div>
+                <ul class="activity-list">
+                    <li>Identify local herb ecology</li>
+                    <li>Make traditional medicine by hand</li>
+                    <li>Understand nature-rooted wellness</li>
+                </ul>
+            </div>
+
+            <div class="day-card">
+                <div class="day-header">
+                    <div class="day-number">5-6</div>
+                    <h3 class="day-title">Jan 14-15 - <span class="highlight">Trek to Armakonda</span> (Highest Peak)</h3>
+                </div>
+                <ul class="activity-list">
+                    <li>Camp under open sky</li>
+                    <li>Stargazing and sunrise above thick fog</li>
+                    <li>Wild trails, natural springs, boulder formations</li>
+                </ul>
+            </div>
+
+            <div class="day-card">
+                <div class="day-header">
+                    <div class="day-number">7</div>
+                    <h3 class="day-title">Jan 16 - Kandulaplem Waterfalls</h3>
+                </div>
+                <ul class="activity-list">
+                    <li>Serene trek through pineapple farms</li>
+                    <li>Lesser-known lush waterfalls</li>
+                    <li>Swimming in natural pools</li>
+                    <li>Authentic village food</li>
+                </ul>
+            </div>
+
+            <div class="day-card">
+                <div class="day-header">
+                    <div class="day-number">8</div>
+                    <h3 class="day-title">Jan 17 - Araku Valley</h3>
+                </div>
+                <p><strong>Morning/Afternoon:</strong></p>
+                <ul class="activity-list">
+                    <li>Scenic drive through Araku</li>
+                    <li>Visit community seed bank with local seed conservator 'Bujji Amma'</li>
+                </ul>
+                <p style="margin-top: 1.5rem;"><strong>Evening:</strong></p>
+                <ul class="activity-list">
+                    <li>Caving at Borra Caves</li>
+                    <li>Explore river gorges and waterfalls inside unexplored cave systems</li>
+                    <li>Learn about geology and riverine ecology</li>
+                    <li>Return to Visakhapatnam by late evening</li>
+                </ul>
+            </div>
+
+            <div class="day-card">
+                <div class="day-header">
+                    <div class="day-number">9</div>
+                    <h3 class="day-title">January 18 - Departure</h3>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="different">
+        <div class="container">
+            <h2 class="section-title">What Makes This Different</h2>
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <i class="ph-fill ph-fire feature-icon"></i>
+                    <h3>Raw Authenticity</h3>
+                    <p>No sanitized experiences. Live with communities as they are. Participate in actual traditions. Face the wild—hallucinogens, raw nature, unpredictable encounters.</p>
+                </div>
+                <div class="feature-card">
+                    <i class="ph-fill ph-tree feature-icon"></i>
+                    <h3>Deep Immersion</h3>
+                    <p>Sleep in tents and village homestays. Forage and cook your own food. Learn traditional medicine-making. Experience festivals from the inside.</p>
+                </div>
+                <div class="feature-card">
+                    <i class="ph-fill ph-mountains feature-icon"></i>
+                    <h3>Physical Adventure</h3>
+                    <p>Trek to the highest peak in Eastern Ghats. Camp in wilderness. Navigate wild trails, springs, and boulders. River walks and waterfall exploration.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="logistics">
+        <div class="container">
+            <h2 class="section-title">Accommodation & Logistics</h2>
+            <div class="logistics-grid">
+                <div class="logistics-card">
+                    <h3><i class="ph-fill ph-bed"></i> Accommodation</h3>
+                    <ul class="activity-list">
+                        <li><strong>Laya Guesthouse</strong> in Addathegala and Paderu (clean, hygienic, basic amenities)</li>
+                        <li><strong>Camping Setup</strong> during village stays and treks (all-weather tents, mats, sleeping bags)</li>
+                    </ul>
+                </div>
+                <div class="logistics-card">
+                    <h3><i class="ph-fill ph-fork-knife"></i> Food</h3>
+                    <ul class="activity-list">
+                        <li>Locally cooked and sourced whenever possible</li>
+                        <li>Trusted restaurants when necessary</li>
+                        <li>Hands-on cooking with communities</li>
+                        <li>Foraged greens and traditional preparations</li>
+                    </ul>
+                </div>
+                <div class="logistics-card">
+                    <h3><i class="ph-fill ph-van"></i> Transport</h3>
+                    <ul class="activity-list">
+                        <li>Car/Bus with chauffeur for entire trip</li>
+                        <li>Trip Leader: Trained Wilderness First Responder and Naturalist with deep local knowledge</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="cocreator">
+        <div class="container cocreator-content">
+            <h2 class="section-title">Co-Creator Model</h2>
+            <p style="font-size: 1.2rem; text-align: center; margin-bottom: 2rem;">We're seeking <strong>2-3 co-creators</strong> to help design and execute this journey.</p>
+            
+            <div class="important-note">
+                <p style="font-size: 1.1rem;"><strong><i class="ph-fill ph-lightbulb"></i> Important:</strong> We're not looking for commercial partners. We want people driven by genuine interest and curiosity—those who want to contribute to the entire trip because it resonates with them.</p>
+            </div>
+
+            <h3 style="font-size: 1.8rem; margin: 2.5rem 0 1.5rem; font-family: 'Playfair Display', serif;">What Co-Creation Means:</h3>
+            <div class="criteria-list">
+                <div class="criteria-item">
+                    <i class="ph-fill ph-eye criteria-icon"></i>
+                    <div>
+                        <strong>Complete Transparency:</strong> Full access to all planning, financial details, and decision-making
+                    </div>
+                </div>
+                <div class="criteria-item">
+                    <i class="ph-fill ph-handshake criteria-icon"></i>
+                    <div>
+                        <strong>Shared Responsibility:</strong> You're among the organizers on the ground with the group
+                    </div>
+                </div>
+                <div class="criteria-item">
+                    <i class="ph-fill ph-hands-clapping criteria-icon"></i>
+                    <div>
+                        <strong>Active Participation:</strong> Contribute your knowledge, network, or planning expertise throughout
+                    </div>
+                </div>
+                <div class="criteria-item">
+                    <i class="ph-fill ph-x-circle criteria-icon"></i>
+                    <div>
+                        <strong>No Financial Exchange:</strong> We're not charging you, and we're not paying you
+                    </div>
+                </div>
+                <div class="criteria-item">
+                    <i class="ph-fill ph-chart-line criteria-icon"></i>
+                    <div>
+                        <strong>Profit Sharing (if any):</strong> If there are profits from the trip, we'll happily share them
+                    </div>
+                </div>
+            </div>
+
+            <h3 style="font-size: 1.8rem; margin: 2.5rem 0 1.5rem; font-family: 'Playfair Display', serif;">What We're Looking For:</h3>
+            <div class="criteria-list">
+                <div class="criteria-item">
+                    <i class="ph-fill ph-heart criteria-icon"></i>
+                    <div>Genuine interest over commercial motivation</div>
+                </div>
+                <div class="criteria-item">
+                    <i class="ph-fill ph-lightning criteria-icon"></i>
+                    <div>Risk-takers and executors</div>
+                </div>
+                <div class="criteria-item">
+                    <i class="ph-fill ph-book-open criteria-icon"></i>
+                    <div>Deep knowledge (ecology, tribal culture, wilderness skills, etc.)</div>
+                </div>
+                <div class="criteria-item">
+                    <i class="ph-fill ph-network criteria-icon"></i>
+                    <div>Network or know-how for trip planning</div>
+                </div>
+                <div class="criteria-item">
+                    <i class="ph-fill ph-compass criteria-icon"></i>
+                    <div>Commitment to authenticity over polish</div>
+                </div>
+                <div class="criteria-item">
+                    <i class="ph-fill ph-fingerprint criteria-icon"></i>
+                    <div>Willingness to build decentralized trust</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="philosophy">
+        <div class="container">
+            <h2 class="section-title">The Philosophy</h2>
+            <div class="philosophy-text">
+                <p>This itinerary balances <strong>rural cultural immersion and practices</strong>, <strong>outdoor exploration and adventure</strong>, and <strong>agriculture and traditional knowledge</strong>.</p>
+                <p style="margin-top: 1.5rem;">With a rhythm of physical activity and adventure followed by calm and restful exploration and deep learning and connection.</p>
+                <p style="margin-top: 2rem; opacity: 0.8; font-size: 1rem;"><em>Note: The itinerary is tentative and can be optimized through discussion.</em></p>
+            </div>
+            <p class="final-note">"This is not for everyone. And that's exactly the point."</p>
+        </div>
+    </section>
+</body>
+</html>
