@@ -8,593 +8,33 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Playfair+Display:wght@700;900&display=swap"
         rel="stylesheet">
+    <link rel="stylesheet" href="assets/style.css">
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        :root {
-            --forest: #1a3a1a;
-            --earth: #8b6914;
-            --sky: #4a90a4;
-            --fire: #d84315;
-            --cream: #fef9f3;
-            --dark: #1a1a1a;
-        }
-
-        body {
-            font-family: 'Space Grotesk', sans-serif;
-            background: var(--cream);
-            color: var(--dark);
-            line-height: 1.7;
-        }
-
-        .hero {
-            background: linear-gradient(135deg, var(--forest) 0%, #2d5a2d 100%);
-            color: var(--cream);
-            padding: 4rem 1rem 3rem;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-        }
-
-        @media (min-width: 768px) {
-            .hero {
-                padding: 8rem 2rem 6rem;
-            }
-        }
-
-        .hero::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: url('data:image/svg+xml,<svg width="60" height="60" xmlns="http://www.w3.org/2000/svg"><path d="M0 0h60v60H0z" fill="none"/><path d="M30 15l5 10h10l-8 7 3 10-10-6-10 6 3-10-8-7h10z" fill="rgba(254,249,243,0.05)"/></svg>');
-            opacity: 0.3;
-        }
-
-        .hero-content {
-            position: relative;
-            max-width: 900px;
-            margin: 0 auto;
-        }
-
-        h1 {
-            font-family: 'Playfair Display', serif;
-            font-size: clamp(3rem, 8vw, 5.5rem);
-            font-weight: 900;
-            margin-bottom: 1rem;
-            line-height: 1.1;
-        }
-
-        .subtitle {
-            font-size: clamp(1.1rem, 2.5vw, 1.5rem);
-            opacity: 0.95;
-            margin-bottom: 0.5rem;
-        }
-
-        .dates {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            background: rgba(254, 249, 243, 0.15);
-            padding: 0.6rem 1rem;
-            border-radius: 50px;
-            margin-top: 1.5rem;
-            font-weight: 500;
-            backdrop-filter: blur(10px);
-            font-size: 0.9rem;
-        }
-
-        @media (min-width: 768px) {
-            .dates {
-                padding: 0.75rem 1.5rem;
-                font-size: 1rem;
-            }
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 1rem;
-        }
-
-        @media (min-width: 768px) {
-            .container {
-                padding: 0 2rem;
-            }
-        }
-
-        section {
-            padding: 3rem 0;
-        }
-
-        @media (min-width: 768px) {
-            section {
-                padding: 5rem 0;
-            }
-        }
-
-        .intro {
-            background: linear-gradient(to bottom, var(--cream), #f9f4ef);
-            border-bottom: 3px solid var(--earth);
-        }
-
-        .intro-text {
-            font-size: 1.1rem;
-            max-width: 850px;
-            margin: 0 auto;
-            text-align: center;
-            line-height: 1.8;
-            color: var(--forest);
-            background: white;
-            padding: 1.5rem;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-            border-left: 4px solid var(--fire);
-        }
-
-        @media (min-width: 768px) {
-            .intro-text {
-                font-size: 1.4rem;
-                line-height: 2;
-                padding: 3rem;
-                border-radius: 20px;
-                box-shadow: 0 15px 50px rgba(0, 0, 0, 0.1);
-                border-left: 5px solid var(--fire);
-            }
-        }
-
-        .media {
-            background: var(--dark);
-            color: var(--cream);
-        }
-
-        .media-grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 2rem;
-            margin-top: 3rem;
-        }
-
-        .media-card {
-            background: rgba(254, 249, 243, 0.05);
-            border-radius: 15px;
-            overflow: hidden;
-            transition: all 0.3s ease;
-            border: 2px solid rgba(254, 249, 243, 0.1);
-            max-width: 500px;
-            margin: 0 auto;
-            width: 100%;
-        }
-
-        .media-card:hover {
-            transform: translateY(-5px);
-            border-color: var(--earth);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
-        }
-
-        .media-card video {
-            width: 100%;
-            height: auto;
-            aspect-ratio: 9 / 16;
-            display: block;
-            background: black;
-            object-fit: cover;
-        }
-
-        .media-caption {
-            padding: 1.5rem;
-            text-align: center;
-            font-size: 1.1rem;
-            font-weight: 500;
-        }
-
-        @media (min-width: 768px) {
-            .media-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-        }
-
-        @media (min-width: 1024px) {
-            .media-grid {
-                grid-template-columns: repeat(3, 1fr);
-            }
-        }
-
-        .map-section {
-            background: linear-gradient(135deg, var(--sky) 0%, #357a8a 100%);
-            color: var(--cream);
-            padding: 3rem 0;
-        }
-
-        @media (min-width: 768px) {
-            .map-section {
-                padding: 5rem 0;
-            }
-        }
-
-        .map-container {
-            max-width: 1000px;
-            margin: 1.5rem auto 0;
-            border-radius: 15px;
-            overflow: hidden;
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
-        }
-
-        @media (min-width: 768px) {
-            .map-container {
-                margin: 2rem auto 0;
-                border-radius: 20px;
-                box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-            }
-        }
-
-        .map-container video {
-            width: 100%;
-            display: block;
-        }
-
-        .goals {
-            background: var(--dark);
-            color: var(--cream);
-        }
-
-        .goals-grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 2rem;
-            margin-top: 2rem;
-        }
-
-        @media (min-width: 768px) {
-            .goals-grid {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 3rem;
-                margin-top: 3rem;
-            }
-        }
-
-        .goal-card {
-            background: rgba(254, 249, 243, 0.05);
-            padding: 2rem;
-            border-radius: 15px;
-            border: 2px solid rgba(254, 249, 243, 0.1);
-            transition: all 0.3s ease;
-        }
-
-        @media (min-width: 768px) {
-            .goal-card {
-                padding: 2.5rem;
-                border-radius: 20px;
-            }
-        }
-
-        .goal-card:hover {
-            transform: translateY(-5px);
-            border-color: var(--earth);
-        }
-
-        .goal-icon {
-            font-size: 3rem;
-            margin-bottom: 1.5rem;
-            display: block;
-            color: var(--earth);
-        }
-
-        .goal-card h3 {
-            font-size: 1.8rem;
-            margin-bottom: 1rem;
-            font-family: 'Playfair Display', serif;
-        }
-
-        .section-title {
-            font-family: 'Playfair Display', serif;
-            font-size: clamp(2rem, 6vw, 3.5rem);
-            text-align: center;
-            margin-bottom: 2rem;
-        }
-
-        @media (min-width: 768px) {
-            .section-title {
-                margin-bottom: 3rem;
-            }
-        }
-
-        .itinerary {
-            background: linear-gradient(to bottom, var(--cream), #f5ebe0);
-        }
-
-        .day-card {
-            background: white;
-            border-radius: 15px;
-            padding: 1.5rem;
-            margin-bottom: 1.5rem;
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
-            border-left: 4px solid var(--forest);
-            transition: all 0.3s ease;
-        }
-
-        @media (min-width: 768px) {
-            .day-card {
-                border-radius: 20px;
-                padding: 2.5rem;
-                margin-bottom: 2rem;
-                box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
-                border-left: 5px solid var(--forest);
-            }
-        }
-
-        .day-card:hover {
-            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.12);
-        }
-
-        @media (min-width: 768px) {
-            .day-card:hover {
-                transform: translateX(10px);
-            }
-        }
-
-        .day-header {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            margin-bottom: 1rem;
-        }
-
-        @media (min-width: 768px) {
-            .day-header {
-                gap: 1rem;
-                margin-bottom: 1.5rem;
-            }
-        }
-
-        .day-number {
-            background: var(--forest);
-            color: var(--cream);
-            width: 45px;
-            height: 45px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 700;
-            font-size: 1.1rem;
-            flex-shrink: 0;
-        }
-
-        @media (min-width: 768px) {
-            .day-number {
-                width: 50px;
-                height: 50px;
-                font-size: 1.2rem;
-            }
-        }
-
-        .day-title {
-            font-family: 'Playfair Display', serif;
-            font-size: 1.3rem;
-            color: var(--forest);
-            line-height: 1.3;
-        }
-
-        @media (min-width: 768px) {
-            .day-title {
-                font-size: 1.8rem;
-            }
-        }
-
-        .activity-list {
-            list-style: none;
-            margin-top: 1rem;
-        }
-
-        .activity-list li {
-            padding: 0.75rem 0;
-            padding-left: 2rem;
-            position: relative;
-        }
-
-        .activity-list li::before {
-            content: '→';
-            position: absolute;
-            left: 0;
-            color: var(--earth);
-            font-weight: 700;
-        }
-
-        .highlight {
-            background: var(--sky);
-            color: white;
-            padding: 0.25rem 0.75rem;
-            border-radius: 8px;
-            font-weight: 500;
-        }
-
-        .different {
-            background: var(--fire);
-            color: white;
-        }
-
-        .feature-grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 2rem;
-            margin-top: 2rem;
-        }
-
-        @media (min-width: 768px) {
-            .feature-grid {
-                grid-template-columns: repeat(3, 1fr);
-                gap: 2rem;
-                margin-top: 3rem;
-            }
-        }
-
-        .feature-card {
-            text-align: center;
-            padding: 1.5rem;
-        }
-
-        @media (min-width: 768px) {
-            .feature-card {
-                padding: 2rem;
-            }
-        }
-
-        .feature-icon {
-            font-size: 4rem;
-            margin-bottom: 1rem;
-        }
-
-        .feature-card h3 {
-            font-family: 'Playfair Display', serif;
-            font-size: 1.5rem;
-            margin-bottom: 1rem;
-        }
-
-        .logistics {
-            background: linear-gradient(135deg, var(--forest) 0%, #2d5a2d 100%);
-            color: var(--cream);
-        }
-
-        .logistics-grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 2rem;
-            margin-top: 2rem;
-        }
-
-        @media (min-width: 768px) {
-            .logistics-grid {
-                grid-template-columns: repeat(3, 1fr);
-                margin-top: 3rem;
-            }
-        }
-
-        .logistics-card {
-            background: rgba(254, 249, 243, 0.1);
-            padding: 1.5rem;
-            border-radius: 15px;
-            backdrop-filter: blur(10px);
-        }
-
-        @media (min-width: 768px) {
-            .logistics-card {
-                padding: 2rem;
-            }
-        }
-
-        .logistics-card h3 {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            font-size: 1.5rem;
-            margin-bottom: 1rem;
-            font-family: 'Playfair Display', serif;
-        }
-
-        .cocreator {
-            background: var(--earth);
-            color: var(--cream);
-        }
-
-        .cocreator-content {
-            max-width: 900px;
-            margin: 0 auto;
-        }
-
-        .important-note {
-            background: rgba(254, 249, 243, 0.15);
-            padding: 1.5rem;
-            border-radius: 12px;
-            margin: 1.5rem 0;
-            border-left: 4px solid var(--cream);
-        }
-
-        @media (min-width: 768px) {
-            .important-note {
-                padding: 2rem;
-                border-radius: 15px;
-                margin: 2rem 0;
-                border-left: 5px solid var(--cream);
-            }
-        }
-
-        .criteria-list {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 1.5rem;
-            margin-top: 2rem;
-        }
-
-        @media (min-width: 768px) {
-            .criteria-list {
-                grid-template-columns: repeat(2, 1fr);
-            }
-        }
-
-        .criteria-item {
-            display: flex;
-            align-items: start;
-            gap: 0.75rem;
-        }
-
-        @media (min-width: 768px) {
-            .criteria-item {
-                gap: 1rem;
-            }
-        }
-
-        .criteria-icon {
-            font-size: 1.5rem;
-            color: var(--cream);
-        }
-
-        .philosophy {
-            background: var(--cream);
-            text-align: center;
-        }
-
-        .philosophy-text {
-            max-width: 800px;
-            margin: 1.5rem auto;
-            font-size: 1.05rem;
-            line-height: 1.7;
-        }
-
-        @media (min-width: 768px) {
-            .philosophy-text {
-                margin: 2rem auto;
-                font-size: 1.2rem;
-                line-height: 1.8;
-            }
-        }
-
-        .final-note {
-            font-family: 'Playfair Display', serif;
-            font-size: 1.5rem;
-            margin-top: 2rem;
-            font-style: italic;
-            color: var(--forest);
-            line-height: 1.4;
-        }
-
-        @media (min-width: 768px) {
-            .final-note {
-                font-size: 2rem;
-                margin-top: 3rem;
-            }
-        }
-    </style>
 </head>
 
 <body>
+    <button class="sticky-cta" onclick="openForm()">Join the Yatra</button>
+    <div id="popupForm" class="popup-overlay" style="display:none;">
+        <div class="popup-box">
+            <h2>Apply to Join Niravaran Yatra</h2>
+            <form id="yatraForm">
+                <input type="text" name="fullName" placeholder="Full Name" required>
+                <input type="tel" name="mobile" placeholder="Mobile Number" required>
+                <input type="email" name="email" placeholder="Email (Optional)">
+                <input type="text" name="city" placeholder="City / State" required>
+                <input type="number" name="age" placeholder="Age" required>
+                <select name="fitness">
+                    <option>Fitness Level</option>
+                    <option>Beginner</option>
+                    <option>Moderate</option>
+                    <option>Advanced</option>
+                </select>
+                <textarea name="reason" rows="4" placeholder="Why do you want to join the Yatra?" required></textarea>
+                <button type="submit" class="submit-btn">Submit Application</button>
+            </form>
+            <button class="close-btn" onclick="closeForm()">×</button>
+        </div>
+    </div>
     <div class="hero">
         <div class="hero-content">
             <h1>Niravaran Yatra</h1>
@@ -629,37 +69,37 @@
             <div class="media-grid">
                 <div class="media-card">
                     <video controls>
-                        <source src="media/cool-intro-video.mp4" type="video/mp4">
+                        <source src="assets/media/cool-intro-video.mp4" type="video/mp4">
                     </video>
                     <div class="media-caption">Journey Introduction</div>
                 </div>
                 <div class="media-card">
                     <video controls>
-                        <source src="media/trip-montage.mp4" type="video/mp4">
+                        <source src="assets/media/cock-fight.mp4" type="video/mp4">
                     </video>
-                    <div class="media-caption">Trip Highlights</div>
+                    <div class="media-caption">Sankranti Cock Fighting</div>
                 </div>
                 <div class="media-card">
                     <video controls>
-                        <source src="media/farmer-explaining-video.mp4" type="video/mp4">
+                        <source src="assets/media/farmer-explaining-video.mp4" type="video/mp4">
                     </video>
                     <div class="media-caption">Local Wisdom</div>
                 </div>
                 <div class="media-card">
                     <video controls>
-                        <source src="media/top-of-hill.mp4" type="video/mp4">
+                        <source src="assets/media/top-of-hill.mp4" type="video/mp4">
                     </video>
                     <div class="media-caption">Summit Views</div>
                 </div>
                 <div class="media-card">
                     <video controls>
-                        <source src="media/inside-cave.mp4" type="video/mp4">
+                        <source src="assets/media/inside-cave.mp4" type="video/mp4">
                     </video>
                     <div class="media-caption">Cave Exploration</div>
                 </div>
                 <div class="media-card">
                     <video controls>
-                        <source src="media/waterfall.mp4" type="video/mp4">
+                        <source src="assets/media/waterfall.mp4" type="video/mp4">
                     </video>
                     <div class="media-caption">Hidden Waterfalls</div>
                 </div>
@@ -904,134 +344,6 @@
         </div>
     </section>
 
-    <style>
-        .local-partner {
-            background: linear-gradient(135deg, var(--forest) 0%, #2d5a2d 100%);
-            color: var(--cream);
-        }
-
-        .partner-content {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 2rem;
-            align-items: center;
-        }
-
-        @media (min-width: 768px) {
-            .partner-content {
-                grid-template-columns: 1fr 2fr;
-                gap: 4rem;
-            }
-        }
-
-        .partner-logo {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background: white;
-            padding: 1.5rem;
-            border-radius: 15px;
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
-            max-width: 300px;
-            margin: 0 auto;
-        }
-
-        @media (min-width: 768px) {
-            .partner-logo {
-                padding: 2rem;
-                border-radius: 20px;
-                box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-                max-width: none;
-            }
-        }
-
-        .partner-logo img {
-            max-width: 100%;
-            height: auto;
-            display: block;
-        }
-
-        .partner-info h3 {
-            font-family: 'Playfair Display', serif;
-            font-size: 1.5rem;
-            margin-bottom: 1rem;
-            color: var(--cream);
-        }
-
-        @media (min-width: 768px) {
-            .partner-info h3 {
-                font-size: 2rem;
-            }
-        }
-
-        .partner-tagline {
-            font-size: 1rem;
-            margin-bottom: 1rem;
-            opacity: 0.9;
-            color: var(--cream);
-        }
-
-        @media (min-width: 768px) {
-            .partner-tagline {
-                font-size: 1.1rem;
-                margin-bottom: 1.5rem;
-            }
-        }
-
-        .partner-info p {
-            margin-bottom: 1rem;
-            line-height: 1.7;
-        }
-
-        @media (min-width: 768px) {
-            .partner-info p {
-                margin-bottom: 1.2rem;
-                line-height: 1.8;
-            }
-        }
-
-        .partner-links {
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-            margin-top: 1.5rem;
-        }
-
-        @media (min-width: 768px) {
-            .partner-links {
-                flex-direction: row;
-                gap: 1.5rem;
-                margin-top: 2rem;
-            }
-        }
-
-        .partner-link {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.5rem;
-            padding: 0.75rem 1.5rem;
-            background: rgba(254, 249, 243, 0.15);
-            border: 2px solid rgba(254, 249, 243, 0.3);
-            border-radius: 50px;
-            color: var(--cream);
-            text-decoration: none;
-            font-weight: 500;
-            transition: all 0.3s ease;
-            backdrop-filter: blur(10px);
-        }
-
-        .partner-link:hover {
-            background: rgba(254, 249, 243, 0.25);
-            border-color: var(--cream);
-            transform: translateY(-2px);
-        }
-
-        .partner-link i {
-            font-size: 1.2rem;
-        }
-    </style>
-
     <section class="map-section">
         <div class="container">
             <h2 class="section-title">The Yatra Route</h2>
@@ -1040,7 +352,7 @@
                 waterfalls of the tribal heartland.</p>
             <div class="map-container">
                 <video controls autoplay loop muted>
-                    <source src="media/yatra-map-animated-video.mp4" type="video/mp4">
+                    <source src="assets/media/yatra-map-animated-video.mp4" type="video/mp4">
                 </video>
             </div>
         </div>
@@ -1083,101 +395,7 @@
         </div>
     </footer>
 
-    <style>
-        .footer {
-            background: var(--dark);
-            color: var(--cream);
-            padding: 4rem 0 2rem;
-        }
-
-        .footer-content {
-            display: grid;
-            grid-template-columns: 2fr 1fr 1fr;
-            gap: 3rem;
-            margin-bottom: 3rem;
-            padding-bottom: 2rem;
-            border-bottom: 1px solid rgba(254, 249, 243, 0.15);
-        }
-
-        .footer-section h3 {
-            font-family: 'Playfair Display', serif;
-            font-size: 1.8rem;
-            margin-bottom: 0.5rem;
-            color: var(--cream);
-        }
-
-        .footer-tagline {
-            font-style: italic;
-            opacity: 0.8;
-            margin-bottom: 1rem;
-        }
-
-        .footer-description {
-            opacity: 0.7;
-            line-height: 1.6;
-        }
-
-        .footer-section h4 {
-            font-size: 1.1rem;
-            margin-bottom: 1rem;
-            color: var(--cream);
-            font-weight: 600;
-        }
-
-        .footer-links {
-            list-style: none;
-        }
-
-        .footer-links li {
-            margin-bottom: 0.75rem;
-        }
-
-        .footer-links a {
-            color: var(--cream);
-            text-decoration: none;
-            opacity: 0.7;
-            transition: all 0.3s ease;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .footer-links a:hover {
-            opacity: 1;
-            color: var(--sky);
-            transform: translateX(3px);
-        }
-
-        .footer-links i {
-            font-size: 1rem;
-        }
-
-        .footer-bottom {
-            text-align: center;
-            opacity: 0.6;
-            font-size: 0.9rem;
-        }
-
-        .footer-bottom p {
-            margin-bottom: 0.5rem;
-        }
-
-        .footer-note {
-            font-style: italic;
-            font-size: 0.85rem;
-        }
-
-        @media (max-width: 768px) {
-            .footer-content {
-                grid-template-columns: 1fr;
-                gap: 2rem;
-            }
-
-            .footer {
-                padding: 3rem 0 1.5rem;
-            }
-        }
-    </style>
+    <script src="assets/script.js"></script>
 </body>
 
 </html>
