@@ -4,10 +4,75 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Niravaran Yatra - The Bare Trip</title>
+    <title>Niravaran Yatra - The Bare Trip | 9-Day Eastern Ghats Expedition</title>
+
+    <!-- SEO Meta Tags -->
+    <meta name="description"
+        content="Join Niravaran Yatra, an immersive 9-day expedition through the Eastern Ghats of Andhra Pradesh. Experience tribal culture, trek to Armakonda peak, explore Borra Caves, and celebrate authentic Sankranti with local communities. January 10-18, 2026.">
+    <meta name="keywords"
+        content="Niravaran Yatra, Eastern Ghats trek, Visakhapatnam tourism, Araku Valley, Borra Caves, tribal culture India, adventure tourism Andhra Pradesh, Armakonda trek, Sankranti festival, eco tourism India">
+    <meta name="author" content="Siddhannam">
+    <meta name="robots" content="index, follow">
+
+    <!-- Open Graph / Social Media Tags -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Niravaran Yatra - The Bare Trip | 9-Day Eastern Ghats Expedition">
+    <meta property="og:description"
+        content="An immersive 9-day expedition into the tribal heartland of the Eastern Ghats. Trek peaks, explore caves, celebrate festivals, and experience raw authenticity.">
+    <meta property="og:url" content="https://niravaran.siddhannam.com">
+    <meta property="og:site_name" content="Niravaran Yatra">
+    <meta property="og:locale" content="en_IN">
+
+    <!-- Twitter Card Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Niravaran Yatra - The Bare Trip">
+    <meta name="twitter:description"
+        content="9-day immersive expedition through the Eastern Ghats. January 10-18, 2026.">
+
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://niravaran.siddhannam.com">
+
+    <!-- JSON-LD Structured Data for Tourism -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "TouristTrip",
+        "name": "Niravaran Yatra - The Bare Trip",
+        "description": "An immersive 9-day expedition into the Eastern Ghats of Andhra Pradesh, featuring tribal culture immersion, trekking, and authentic experiences.",
+        "touristType": ["Adventure Tourism", "Cultural Tourism", "Eco Tourism"],
+        "itinerary": {
+            "@type": "ItemList",
+            "numberOfItems": 8,
+            "itemListElement": [
+                {"@type": "ListItem", "position": 1, "name": "Visakhapatnam - Arrival"},
+                {"@type": "ListItem", "position": 2, "name": "Guramamidi - Village"},
+                {"@type": "ListItem", "position": 3, "name": "Narsapuram - Culture"},
+                {"@type": "ListItem", "position": 4, "name": "Addateegala - Sankranti Festival"},
+                {"@type": "ListItem", "position": 5, "name": "Chintapalle - Forest"},
+                {"@type": "ListItem", "position": 6, "name": "Paderu - Medicinal Herbs"},
+                {"@type": "ListItem", "position": 7, "name": "Araku Valley - Caves & Trek"},
+                {"@type": "ListItem", "position": 8, "name": "Visakhapatnam - Departure"}
+            ]
+        },
+        "offers": {
+            "@type": "Offer",
+            "availability": "https://schema.org/LimitedAvailability"
+        },
+        "provider": {
+            "@type": "Organization",
+            "name": "Siddhannam",
+            "url": "https://siddhannam.com"
+        }
+    }
+    </script>
+
+    <!-- Fonts -->
     <link
         href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Playfair+Display:wght@700;900&display=swap"
         rel="stylesheet">
+    <!-- Leaflet CSS for Interactive Map -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+        integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
     <link rel="stylesheet" href="assets/style.css">
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
 </head>
@@ -237,13 +302,15 @@
                 <div class="feature-card">
                     <i class="ph-fill ph-fire feature-icon"></i>
                     <h3>Raw Authenticity</h3>
-                    <p>No sanitized experiences. Live with communities as they are. Participate in actual traditions.
+                    <p><strong>Unfiltered</strong> experiences. Live with communities as they are. Participate in actual
+                        traditions.
                         Face the wild—hallucinogens, raw nature, unpredictable encounters.</p>
                 </div>
                 <div class="feature-card">
                     <i class="ph-fill ph-tree feature-icon"></i>
                     <h3>Deep Immersion</h3>
-                    <p>Sleep in tents while camping. Forage and cook your own food. Learn traditional medicine-making.
+                    <p>Sleep in tents while camping. Forage and cook <strong>our</strong> own food. Learn traditional
+                        medicine-making.
                         Experience festivals from the inside.</p>
                 </div>
                 <div class="feature-card">
@@ -344,19 +411,136 @@
         </div>
     </section>
 
-    <section class="map-section">
+    <section class="map-section" id="route-section">
         <div class="container">
             <h2 class="section-title">The Yatra Route</h2>
-            <p style="text-align: center; font-size: 1rem; max-width: 700px; margin: 0 auto; line-height: 1.6;">Follow
-                our path through the Eastern Ghats, from coastal Visakhapatnam to the highest peaks and hidden
-                waterfalls of the tribal heartland.</p>
-            <div class="map-container">
-                <video controls autoplay loop muted>
-                    <source src="assets/media/yatra-map-animated-video.mp4" type="video/mp4">
-                </video>
+            <p class="route-subtitle">Follow our path through the Eastern Ghats, from coastal Visakhapatnam to the
+                highest peaks and hidden waterfalls of the tribal heartland.</p>
+
+            <div class="interactive-map-wrapper">
+                <div id="yatraMap" class="yatra-map"></div>
+
+                <a href="https://maps.app.goo.gl/kLt4inDh9btTY4Cp9?g_st=aw" target="_blank" class="gmaps-btn"
+                    title="Open in Google Maps">
+                    <i class="ph-fill ph-google-logo"></i> <span>Open in Maps</span>
+                </a>
+
+                <div class="map-legend">
+                    <div class="legend-item"><span class="legend-dot start"></span> Start/End</div>
+                    <div class="legend-item"><span class="legend-dot stop"></span> Route Stop</div>
+                    <div class="legend-line"></div>
+                    <span>Journey Path</span>
+                </div>
+            </div>
+
+            <div class="route-timeline">
+                <div class="timeline-track">
+                    <div class="timeline-progress"></div>
+                </div>
+                <div class="timeline-stops">
+                    <div class="timeline-stop" data-stop="0">
+                        <div class="stop-marker active">
+                            <span class="day-badge">1</span>
+                            <i class="ph-fill ph-airplane-takeoff"></i>
+                        </div>
+                        <div class="stop-info">
+                            <h4>Vizag</h4>
+                            <p>Arrival</p>
+                        </div>
+                    </div>
+                    <div class="timeline-stop" data-stop="1">
+                        <div class="stop-marker">
+                            <span class="day-badge">2</span>
+                            <i class="ph-fill ph-house-line"></i>
+                        </div>
+                        <div class="stop-info">
+                            <h4>Guramamidi</h4>
+                            <p>Village</p>
+                        </div>
+                    </div>
+                    <div class="timeline-stop" data-stop="2">
+                        <div class="stop-marker">
+                            <span class="day-badge">2</span>
+                            <i class="ph-fill ph-map-pin"></i>
+                        </div>
+                        <div class="stop-info">
+                            <h4>Narsapuram</h4>
+                            <p>Culture</p>
+                        </div>
+                    </div>
+                    <div class="timeline-stop" data-stop="3">
+                        <div class="stop-marker">
+                            <span class="day-badge">2-3</span>
+                            <i class="ph-fill ph-confetti"></i>
+                        </div>
+                        <div class="stop-info">
+                            <h4>Addateegala</h4>
+                            <p>Sankranti</p>
+                        </div>
+                    </div>
+                    <div class="timeline-stop" data-stop="4">
+                        <div class="stop-marker">
+                            <span class="day-badge">4</span>
+                            <i class="ph-fill ph-tree"></i>
+                        </div>
+                        <div class="stop-info">
+                            <h4>Chintapalle</h4>
+                            <p>Forest</p>
+                        </div>
+                    </div>
+                    <div class="timeline-stop" data-stop="5">
+                        <div class="stop-marker">
+                            <span class="day-badge">5</span>
+                            <i class="ph-fill ph-leaf"></i>
+                        </div>
+                        <div class="stop-info">
+                            <h4>Paderu</h4>
+                            <p>Herbs</p>
+                        </div>
+                    </div>
+                    <div class="timeline-stop" data-stop="6">
+                        <div class="stop-marker">
+                            <span class="day-badge">6-8</span>
+                            <i class="ph-fill ph-mountains"></i>
+                        </div>
+                        <div class="stop-info">
+                            <h4>Araku</h4>
+                            <p>Caves & Trek</p>
+                        </div>
+                    </div>
+                    <div class="timeline-stop" data-stop="7">
+                        <div class="stop-marker">
+                            <span class="day-badge">9</span>
+                            <i class="ph-fill ph-airplane-landing"></i>
+                        </div>
+                        <div class="stop-info">
+                            <h4>Vizag</h4>
+                            <p>Departure</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="stopModal" class="stop-modal">
+                <div class="modal-content">
+                    <button class="modal-close" onclick="closeStopModal()">&times;</button>
+                    <div class="modal-header">
+                        <span class="modal-day-badge">Day 1</span>
+                        <h3 class="modal-title">Location Name</h3>
+                    </div>
+                    <div class="modal-body">
+                        <p class="modal-description"></p>
+                        <div class="modal-activities">
+                            <h4><i class="ph-fill ph-star"></i> Key Experiences</h4>
+                            <ul class="modal-activity-list"></ul>
+                        </div>
+                    </div>
+
+                </div>
             </div>
         </div>
     </section>
+
 
     <footer class="footer">
         <div class="container">
@@ -395,6 +579,8 @@
         </div>
     </footer>
 
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+        integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
     <script src="assets/script.js"></script>
 </body>
 
