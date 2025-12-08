@@ -42,16 +42,13 @@
         "touristType": ["Adventure Tourism", "Cultural Tourism", "Eco Tourism"],
         "itinerary": {
             "@type": "ItemList",
-            "numberOfItems": 8,
+            "numberOfItems": 5,
             "itemListElement": [
                 {"@type": "ListItem", "position": 1, "name": "Visakhapatnam - Arrival"},
-                {"@type": "ListItem", "position": 2, "name": "Guramamidi - Village"},
-                {"@type": "ListItem", "position": 3, "name": "Narsapuram - Culture"},
-                {"@type": "ListItem", "position": 4, "name": "Addateegala - Sankranti Festival"},
-                {"@type": "ListItem", "position": 5, "name": "Chintapalle - Forest"},
-                {"@type": "ListItem", "position": 6, "name": "Paderu - Medicinal Herbs"},
-                {"@type": "ListItem", "position": 7, "name": "Araku Valley - Caves & Trek"},
-                {"@type": "ListItem", "position": 8, "name": "Visakhapatnam - Departure"}
+                {"@type": "ListItem", "position": 2, "name": "Addateegala - Sankranti Festival"},
+                {"@type": "ListItem", "position": 3, "name": "Paderu - Medicinal Herbs"},
+                {"@type": "ListItem", "position": 4, "name": "Araku Valley - Caves & Trek"},
+                {"@type": "ListItem", "position": 5, "name": "Visakhapatnam - Departure"}
             ]
         },
         "offers": {
@@ -88,6 +85,12 @@
                 <input type="email" name="email" placeholder="Email (Optional)">
                 <input type="text" name="city" placeholder="City / State" required>
                 <input type="number" name="age" placeholder="Age" required>
+                <select name="gender" required>
+                    <option value="">Select Gender</option>
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                    <option value="Other">Other</option>
+                </select>
                 <select name="fitness">
                     <option>Fitness Level</option>
                     <option>Beginner</option>
@@ -101,6 +104,10 @@
         </div>
     </div>
     <div class="hero">
+        <video class="hero-video" autoplay muted loop playsinline poster="assets/media/hero-poster.jpg">
+            <source src="assets/media/hero-bg.mp4" type="video/mp4">
+        </video>
+        <div class="hero-overlay"></div>
         <div class="hero-content">
             <h1>Niravaran Yatra</h1>
             <p class="subtitle">The Bare Trip</p>
@@ -450,26 +457,6 @@
                     </div>
                     <div class="timeline-stop" data-stop="1">
                         <div class="stop-marker">
-                            <span class="day-badge">2</span>
-                            <i class="ph-fill ph-house-line"></i>
-                        </div>
-                        <div class="stop-info">
-                            <h4>Guramamidi</h4>
-                            <p>Village</p>
-                        </div>
-                    </div>
-                    <div class="timeline-stop" data-stop="2">
-                        <div class="stop-marker">
-                            <span class="day-badge">2</span>
-                            <i class="ph-fill ph-map-pin"></i>
-                        </div>
-                        <div class="stop-info">
-                            <h4>Narsapuram</h4>
-                            <p>Culture</p>
-                        </div>
-                    </div>
-                    <div class="timeline-stop" data-stop="3">
-                        <div class="stop-marker">
                             <span class="day-badge">2-3</span>
                             <i class="ph-fill ph-confetti"></i>
                         </div>
@@ -478,17 +465,7 @@
                             <p>Sankranti</p>
                         </div>
                     </div>
-                    <div class="timeline-stop" data-stop="4">
-                        <div class="stop-marker">
-                            <span class="day-badge">4</span>
-                            <i class="ph-fill ph-tree"></i>
-                        </div>
-                        <div class="stop-info">
-                            <h4>Chintapalle</h4>
-                            <p>Forest</p>
-                        </div>
-                    </div>
-                    <div class="timeline-stop" data-stop="5">
+                    <div class="timeline-stop" data-stop="2">
                         <div class="stop-marker">
                             <span class="day-badge">5</span>
                             <i class="ph-fill ph-leaf"></i>
@@ -498,7 +475,7 @@
                             <p>Herbs</p>
                         </div>
                     </div>
-                    <div class="timeline-stop" data-stop="6">
+                    <div class="timeline-stop" data-stop="3">
                         <div class="stop-marker">
                             <span class="day-badge">6-8</span>
                             <i class="ph-fill ph-mountains"></i>
@@ -508,7 +485,7 @@
                             <p>Caves & Trek</p>
                         </div>
                     </div>
-                    <div class="timeline-stop" data-stop="7">
+                    <div class="timeline-stop" data-stop="4">
                         <div class="stop-marker">
                             <span class="day-badge">9</span>
                             <i class="ph-fill ph-airplane-landing"></i>

@@ -1,3 +1,60 @@
+// ==========================================
+// UNIQUE VISITOR TRACKING
+// ==========================================
+const TRACKING_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxODUeFAAlMg19pvPZhYxLJ619rmpkEbzfDNrysXksCE3jygg-ZHfMpFf6_lZhI57Qa/exec';
+
+function generateVisitorId() {
+    const timestamp = Date.now().toString(36);
+    const randomPart = Math.random().toString(36).substring(2, 15);
+    return `visitor_${timestamp}_${randomPart}`;
+}
+
+function getOrCreateVisitorId() {
+    let visitorId = localStorage.getItem('niravaran_visitor_id');
+    if (!visitorId) {
+        visitorId = generateVisitorId();
+        localStorage.setItem('niravaran_visitor_id', visitorId);
+    }
+    return visitorId;
+}
+
+function trackVisitor() {
+    // Check if already tracked in this session
+    if (sessionStorage.getItem('niravaran_tracked')) {
+        console.log('Visitor already tracked this session');
+        return;
+    }
+
+    const visitorId = getOrCreateVisitorId();
+    const trackingData = {
+        visitorId: visitorId
+    };
+
+    // Mark as tracked for this session BEFORE sending request
+    sessionStorage.setItem('niravaran_tracked', 'true');
+
+    // Send tracking data to Google Sheets
+    fetch(TRACKING_SCRIPT_URL, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(trackingData)
+    })
+        .then(() => {
+            console.log('Visitor tracked successfully');
+        })
+        .catch((error) => {
+            console.log('Tracking error:', error);
+            // Remove tracking flag if failed so it can retry
+            sessionStorage.removeItem('niravaran_tracked');
+        });
+}
+
+// ==========================================
+// FORM FUNCTIONS
+// ==========================================
 function openForm() {
     document.getElementById("popupForm").style.display = "flex";
 }
@@ -24,33 +81,6 @@ const yatraStops = [
     },
     {
         id: 1,
-        name: "Guramamidi",
-        day: "Day 2",
-        coords: [17.5395698, 81.7901882],
-        shortDesc: "Rural village experience",
-        description: "Experience authentic rural life in Guramamidi village. Connect with local communities and immerse yourself in traditional village culture.",
-        activities: [
-            "Village exploration",
-            "Meet local communities",
-            "Traditional food experience"
-        ],
-        isStartEnd: false
-    },
-    {
-        id: 2,
-        name: "Narsapuram",
-        day: "Day 2",
-        coords: [17.5364748, 81.8681155],
-        shortDesc: "Cultural stop",
-        description: "Brief stop at Narsapuram to experience local culture and prepare for the journey deeper into the Eastern Ghats.",
-        activities: [
-            "Local exploration",
-            "Cultural immersion"
-        ],
-        isStartEnd: false
-    },
-    {
-        id: 3,
         name: "Addateegala",
         day: "Days 2-3",
         coords: [17.4776411, 82.0234825],
@@ -67,21 +97,7 @@ const yatraStops = [
         isStartEnd: false
     },
     {
-        id: 4,
-        name: "Chintapalle",
-        day: "Day 4",
-        coords: [17.8710309, 82.3499325],
-        shortDesc: "Forest & nature",
-        description: "Explore the dense forests around Chintapalle. Experience the natural beauty of the Eastern Ghats with its rich biodiversity.",
-        activities: [
-            "Forest trekking",
-            "Nature exploration",
-            "Wildlife spotting"
-        ],
-        isStartEnd: false
-    },
-    {
-        id: 5,
+        id: 2,
         name: "Paderu",
         day: "Day 5",
         coords: [18.0802006, 82.663802],
@@ -95,7 +111,7 @@ const yatraStops = [
         isStartEnd: false
     },
     {
-        id: 6,
+        id: 3,
         name: "Araku Valley",
         day: "Days 6-8",
         coords: [18.3222221, 82.8801765],
@@ -112,7 +128,7 @@ const yatraStops = [
         isStartEnd: false
     },
     {
-        id: 7,
+        id: 4,
         name: "Visakhapatnam",
         day: "Day 9",
         coords: [17.6973801, 83.2990254],
@@ -313,6 +329,9 @@ function initCtaObserver() {
 }
 
 document.addEventListener('DOMContentLoaded', function () {
+    // Track unique visitor
+    trackVisitor();
+
     initYatraMap();
     initTimelineInteractions();
 
