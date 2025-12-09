@@ -79,26 +79,93 @@
     <div id="popupForm" class="popup-overlay" style="display:none;">
         <div class="popup-box">
             <h2>Apply to Join Niravaran Yatra</h2>
+
+            <!-- Progress Indicator -->
+            <div class="form-progress">
+                <div class="progress-step active" data-step="1">1</div>
+                <div class="progress-line"></div>
+                <div class="progress-step" data-step="2">2</div>
+                <div class="progress-line" data-line="2"></div>
+                <div class="progress-step" data-step="3">3</div>
+            </div>
+
             <form id="yatraForm">
-                <input type="text" name="fullName" placeholder="Full Name" required>
-                <input type="tel" name="mobile" placeholder="Mobile Number" required>
-                <input type="email" name="email" placeholder="Email (Optional)">
-                <input type="text" name="city" placeholder="City / State" required>
-                <input type="number" name="age" placeholder="Age" required>
-                <select name="gender" required>
-                    <option value="">Select Gender</option>
-                    <option value="Male">Male</option>
-                    <option value="Female">Female</option>
-                    <option value="Other">Other</option>
-                </select>
-                <select name="fitness">
-                    <option>Fitness Level</option>
-                    <option>Beginner</option>
-                    <option>Moderate</option>
-                    <option>Advanced</option>
-                </select>
-                <textarea name="reason" rows="4" placeholder="Why do you want to join the Yatra?" required></textarea>
-                <button type="submit" class="submit-btn">Submit Application</button>
+                <!-- Step 1: Personal Info -->
+                <div class="form-step active" data-step="1">
+                    <input type="text" name="fullName" placeholder="Full Name" required>
+                    <input type="tel" name="mobile" placeholder="Mobile Number" required>
+                    <input type="email" name="email" placeholder="Email (Optional)">
+                    <input type="text" name="city" placeholder="City / State" required>
+                    <input type="number" name="age" placeholder="Age" required>
+                    <select name="gender" required>
+                        <option value="">Select Gender</option>
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>
+                        <option value="Other">Other</option>
+                    </select>
+                    <select name="fitness" required>
+                        <option value="">Fitness Level</option>
+                        <option value="Beginner">Beginner</option>
+                        <option value="Moderate">Moderate</option>
+                        <option value="Advanced">Advanced</option>
+                    </select>
+                    <button type="button" class="next-btn" onclick="nextStep()">Next →</button>
+                </div>
+
+                <!-- Step 2: Motivation & Skills -->
+                <div class="form-step" data-step="2">
+                    <textarea name="reason" rows="3" placeholder="Why do you want to join the Yatra?"
+                        required></textarea>
+                    <textarea name="skills" rows="2"
+                        placeholder="What skill or story do you bring? (e.g., photography, cooking, music)"
+                        required></textarea>
+                    <div class="form-buttons">
+                        <button type="button" class="back-btn" onclick="prevStep()">← Back</button>
+                        <button type="button" class="next-btn flex-btn" onclick="nextStep()">Next →</button>
+                    </div>
+                </div>
+
+                <!-- Step 3: Contribution Details -->
+                <div class="form-step" data-step="3">
+                    <div class="contribution-info">
+                        <p class="contribution-intro">To keep this experience community-led and sustainable, we share
+                            costs.</p>
+                        <p class="contribution-amount">₹ 40,000</p>
+                        <p class="contribution-label">9-day all-inclusive expedition</p>
+                        <div class="contribution-details">
+                            <div class="includes">
+                                <span class="detail-label">✓ Includes:</span>
+                                <span>Transport from Vizag, 2 meals/day, camping gear, guides, community
+                                    contributions</span>
+                            </div>
+                            <div class="excludes">
+                                <span class="detail-label">✗ Excludes:</span>
+                                <span>Travel to Vizag</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="contribution-section">
+                        <p class="field-label">Are you comfortable with this contribution?</p>
+                        <label class="radio-option">
+                            <input type="radio" name="budgetComfort" value="Yes, ready to commit" required>
+                            <span>Yes, ready to commit</span>
+                        </label>
+                        <label class="radio-option">
+                            <input type="radio" name="budgetComfort" value="It's a stretch, but interested">
+                            <span>It's a stretch, but I'm interested</span>
+                        </label>
+                        <label class="radio-option">
+                            <input type="radio" name="budgetComfort" value="Out of my budget">
+                            <span>No, this is out of my budget</span>
+                        </label>
+                    </div>
+
+                    <div class="form-buttons">
+                        <button type="button" class="back-btn" onclick="prevStep()">← Back</button>
+                        <button type="submit" class="submit-btn">Submit</button>
+                    </div>
+                </div>
             </form>
             <button class="close-btn" onclick="closeForm()">×</button>
         </div>

@@ -1,6 +1,3 @@
-// ==========================================
-// UNIQUE VISITOR TRACKING
-// ==========================================
 const TRACKING_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxODUeFAAlMg19pvPZhYxLJ619rmpkEbzfDNrysXksCE3jygg-ZHfMpFf6_lZhI57Qa/exec';
 
 function generateVisitorId() {
@@ -19,9 +16,7 @@ function getOrCreateVisitorId() {
 }
 
 function trackVisitor() {
-    // Check if already tracked in this session
     if (sessionStorage.getItem('niravaran_tracked')) {
-        console.log('Visitor already tracked this session');
         return;
     }
 
@@ -30,10 +25,8 @@ function trackVisitor() {
         visitorId: visitorId
     };
 
-    // Mark as tracked for this session BEFORE sending request
     sessionStorage.setItem('niravaran_tracked', 'true');
 
-    // Send tracking data to Google Sheets
     fetch(TRACKING_SCRIPT_URL, {
         method: 'POST',
         mode: 'no-cors',
@@ -42,25 +35,116 @@ function trackVisitor() {
         },
         body: JSON.stringify(trackingData)
     })
-        .then(() => {
-            console.log('Visitor tracked successfully');
-        })
         .catch((error) => {
-            console.log('Tracking error:', error);
-            // Remove tracking flag if failed so it can retry
             sessionStorage.removeItem('niravaran_tracked');
         });
 }
 
-// ==========================================
-// FORM FUNCTIONS
-// ==========================================
+
+let currentFormStep = 1;
+const totalSteps = 3;
+
+
+function trackFormActivity(action, step) {
+    const visitorId = getOrCreateVisitorId();
+
+    const form = document.getElementById('yatraForm');
+    let formDataObj = {};
+    if (form) {
+        const formData = new FormData(form);
+        formData.forEach((value, key) => {
+            if (value && value.trim() !== '') {
+                formDataObj[key] = value;
+            }
+        });
+    }
+
+    const activityData = {
+        type: 'form_activity',
+        visitorId: visitorId,
+        action: action,
+        step: step || currentFormStep,
+        timestamp: new Date().toISOString(),
+        data: formDataObj
+    };
+
+    fetch(TRACKING_SCRIPT_URL, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(activityData)
+    }).catch(err => console.log('Activity tracking failed:', err));
+}
+
 function openForm() {
     document.getElementById("popupForm").style.display = "flex";
+    trackFormActivity('opened_form', 1);
 }
 
 function closeForm() {
     document.getElementById("popupForm").style.display = "none";
+    trackFormActivity('closed_form', currentFormStep);
+    currentFormStep = 1;
+    updateFormStep();
+}
+
+function nextStep() {
+    const currentStepEl = document.querySelector('.form-step.active');
+    const inputs = currentStepEl.querySelectorAll('input[required], select[required], textarea[required]');
+
+    let isValid = true;
+    inputs.forEach(input => {
+        if (!input.value || input.value === '') {
+            input.style.borderColor = '#d84315';
+            isValid = false;
+        } else {
+            input.style.borderColor = '#e0e0e0';
+        }
+    });
+
+    if (!isValid) {
+        return;
+    }
+
+    trackFormActivity('completed_step', currentFormStep);
+
+    if (currentFormStep < totalSteps) {
+        currentFormStep++;
+        updateFormStep();
+        trackFormActivity('viewed_step', currentFormStep);
+    }
+}
+
+function prevStep() {
+    if (currentFormStep > 1) {
+        currentFormStep--;
+        updateFormStep();
+    }
+}
+
+function updateFormStep() {
+    document.querySelectorAll('.form-step').forEach(step => {
+        step.classList.remove('active');
+    });
+    document.querySelector(`.form-step[data-step="${currentFormStep}"]`).classList.add('active');
+    document.querySelectorAll('.progress-step').forEach(step => {
+        const stepNum = parseInt(step.dataset.step);
+        step.classList.remove('active', 'completed');
+        if (stepNum === currentFormStep) {
+            step.classList.add('active');
+        } else if (stepNum < currentFormStep) {
+            step.classList.add('completed');
+        }
+    });
+    document.querySelectorAll('.progress-line').forEach((line, index) => {
+        if (currentFormStep > index + 1) {
+            line.classList.add('active');
+        } else {
+            line.classList.remove('active');
+        }
+    });
 }
 
 
@@ -329,7 +413,6 @@ function initCtaObserver() {
 }
 
 document.addEventListener('DOMContentLoaded', function () {
-    // Track unique visitor
     trackVisitor();
 
     initYatraMap();
@@ -355,12 +438,12 @@ document.addEventListener('DOMContentLoaded', function () {
         submitBtn.disabled = true;
         submitBtn.textContent = "Submitting...";
 
-        const scriptURL = 'https://script.google.com/macros/s/AKfycbxODUeFAAlMg19pvPZhYxLJ619rmpkEbzfDNrysXksCE3jygg-ZHfMpFf6_lZhI57Qa/exec';
+        trackFormActivity('submitted', 3);
 
         const formData = new FormData(form);
         const params = new URLSearchParams(formData);
 
-        fetch(scriptURL, {
+        fetch(TRACKING_SCRIPT_URL, {
             method: 'POST',
             mode: 'no-cors',
             headers: {
@@ -371,7 +454,9 @@ document.addEventListener('DOMContentLoaded', function () {
             .then(() => {
                 alert("✅ Application submitted successfully! We'll get back to you soon.");
                 form.reset();
-                closeForm();
+                document.getElementById("popupForm").style.display = "none";
+                currentFormStep = 1;
+                updateFormStep();
             })
             .catch((error) => {
                 console.error('Error:', error);
